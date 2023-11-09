@@ -1,10 +1,7 @@
 package com.pw.mwo.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,6 +10,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +23,5 @@ public class Order {
     @OneToMany
     private List<Product> productList;
 
-    @Embedded
-    private OrderStatus status;
-
+    private OrderStatus orderStatus;
 }

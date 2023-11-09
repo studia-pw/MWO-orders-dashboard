@@ -1,10 +1,14 @@
 package com.pw.mwo.domain;
 
-import jakarta.persistence.Embeddable;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Embeddable
 public enum OrderStatus {
+    @JsonProperty("new")
     NEW,
+
+    @JsonProperty("inProgress")
     IN_PROGRESS,
-    COMPLETED
+
+    @JsonProperty("completed")
+    COMPLETED;
 }

@@ -10,5 +10,8 @@ import java.util.List;
 public interface ProductRepository extends CrudRepository<Product, Long> {
     @Override
     List<Product> findAll();
+
+    @Override
+    List<Product> findAllById(Iterable<Long> ids);
     boolean existsByName(String name);
 }
