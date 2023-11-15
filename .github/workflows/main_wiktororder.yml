@@ -26,22 +26,24 @@ jobs:
         
       - name: Build with Maven
         run: mvn clean install
+        
+      - name: Run tests
+        run: mvn test
+
+      - name: Increment version
+        run: |
+          new_version=$(echo "${{ github.event.before }}" | awk -F. '{print $NF + 1}')
+          sed -i "s/<revision>.*<\/revision>/<revision>1.0.${new_version}<\/revision>/" pom.xml
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: java-app
           path: '${{ github.workspace }}/target/*.war'
-  test: 
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Run tests
-        run: mvn test
 
   deploy:
     runs-on: ubuntu-latest
-    needs: test
+    needs: build
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
@@ -60,5 +62,3 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_096A3491BBD54B4DB4D39F7F1700AAA3 }}
           package: '*.war'
-          environment-variables: |
-            VERSION=${{ env.VERSION }}
