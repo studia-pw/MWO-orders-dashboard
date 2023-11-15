@@ -32,6 +32,11 @@ jobs:
         with:
           name: java-app
           path: '${{ github.workspace }}/target/*.war'
+  test: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run tests
+        run: mvn test
 
   deploy:
     runs-on: ubuntu-latest
