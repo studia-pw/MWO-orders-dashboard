@@ -7,7 +7,7 @@ public class ClientFactory {
         return Client.builder()
                 .name("John")
                 .surname("Doe")
-                .email("john.doe@example.com")
+                .email("john.doe123@example.com")
                 .build();
     }
 
