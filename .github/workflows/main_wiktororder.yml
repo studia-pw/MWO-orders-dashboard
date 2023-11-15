@@ -20,7 +20,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: '17'
-
+          
+      - name: Generate version number
+        run: echo "VERSION=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
+        
       - name: Build with Maven
         run: mvn clean install
 
@@ -51,3 +54,5 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_096A3491BBD54B4DB4D39F7F1700AAA3 }}
           package: '*.war'
+          environment-variables: |
+            VERSION=${{ env.VERSION }}
