@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary px-5">
+  <div class="container-fluid">
+    <div class="align-items-center d-inline-flex gap-2">
+      <svg class="bi bi-house" fill="currentColor" height="16" viewBox="0 0 16 16" width="16"
+           xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
+      </svg>
+      <a class="navbar-brand" routerLink="">Home</a>
+    </div>
+
+    <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+            class="navbar-toggler"
+            data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/orders">Orders</a>
+        </li>
+        <li class="nav-item">
+          <a aria-current="page" class="nav-link active" routerLink="/clients">Clients</a>
+        </li>
+        <li class="nav-item">
+          <a aria-current="page" class="nav-link active" routerLink="/products">Products</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
