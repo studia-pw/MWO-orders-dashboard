@@ -1,15 +1,15 @@
 <app-navbar></app-navbar>
 <div class="container-xxl">
   <div class="d-flex justify-content-end gap-2 mb-3 mt-3">
-    <button type="button" class="btn btn-primary" (click)="open(createOrder)">Add new product</button>
-    <button type="button" class="btn btn-danger" (click)="open(deletionConfirmation)">Remove products</button>
+    <button type="button" class="btn btn-primary" (click)="open(create)">Add new product</button>
+    <button type="button" class="btn btn-danger" (click)="open(deleteConfirmation)">Remove products</button>
   </div>
   <table class="table table-striped">
     <thead>
     <tr>
       <th scope="col">
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" (click)="selectAll()">
         </div>
       </th>
       <th scope="col">Id</th>
@@ -29,12 +29,12 @@
       </th>
       <td> {{ product.id }}</td>
       <td> {{ product.name }}</td>
-      <td> {{ product.price }}</td>
+      <td> {{ product.price | currency:'USD' }}</td>
       <td> {{ product.availability }}</td>
       <td class="w-25">
   <div class="d-inline-flex flex-row gap-3">
-    <button type="button" class="btn btn-outline-primary" (click)="onEdit()">Edit</button>
-    <button type="button" class="btn btn-outline-danger" (click)="onDelete()">Delete</button>
+    <button type="button" class="btn btn-outline-primary" (click)="onEdit(product.id)">Edit</button>
+    <button type="button" class="btn btn-outline-danger" (click)="onDelete(product.id)">Delete</button>
   </div>
       </td>
     </tr>
@@ -45,28 +45,28 @@
 
 </div>
 
-<ng-template #deletionConfirmation let-modal>
+<ng-template #deleteConfirmation let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Products deletetion</h4>
+    <h4 class="modal-title text-danger" id="modal-basic-title">You are about to delete a product</h4>
     <button type="button" ngbAutofocus class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
-    <p>Are you <strong>sure</strong> you want to delete <strong class="text-danger">5</strong> products?</p>
+    <p>{{ deleteMsg }}</p>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
-    <button type="button"  class="btn btn-danger" (click)="modal.close('delete click')">Delete</button>
+    <button type="button"  class="btn btn-danger" (click)="onDeleteSubmit(modal)">Delete</button>
   </div>
 </ng-template>
 
 
-<ng-template #createOrder let-modal>
+<ng-template #create let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Add new product</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="productForm">
+    <form [formGroup]="productFormCreate">
       <div class="mb-3 d-flex flex-column gap-3">
         <div class="form-floating">
           <input formControlName="name" id="name" placeholder="Name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
@@ -75,12 +75,12 @@
 
         <div class="form-floating">
           <input formControlName="price" id="surname" placeholder="Price" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-          <label for="name">Price</label>
+          <label for="surname">Price</label>
         </div>
 
         <div class="form-floating">
           <input formControlName="quantity" id="email" placeholder="Quantity" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-          <label for="email">Quantity</label>
+          <label for="quantity">Quantity</label>
         </div>
 
       </div>
@@ -88,6 +88,38 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
-    <button type="submit" class="btn btn-primary" [disabled]="!productForm.valid" (click)="onCreateSubmit(modal)">Save</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!productFormCreate.valid" (click)="onCreateSubmit(modal)">Save</button>
+  </div>
+</ng-template>
+
+<ng-template #update let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Update product</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="productFormUpdate">
+      <div class="mb-3 d-flex flex-column gap-3">
+        <div class="form-floating">
+          <input formControlName="name" id="name" placeholder="Name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+          <label for="name">Name</label>
+        </div>
+
+        <div class="form-floating">
+          <input formControlName="price" id="surname" placeholder="Price" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+          <label for="surname">Price</label>
+        </div>
+
+        <div class="form-floating">
+          <input formControlName="quantity" id="quantity" placeholder="Quantity" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+          <label for="quantity">Quantity</label>
+        </div>
+
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!productFormUpdate.valid" (click)="onEditSubmit(modal)">Save</button>
   </div>
 </ng-template>
