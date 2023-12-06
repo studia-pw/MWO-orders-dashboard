@@ -28,7 +28,7 @@ class SeleniumTests {
     @BeforeEach
     void beforeEach() {
         final var options = new ChromeOptions();
-//        options.addArguments("--headless", "--disable-extensions", "--disable-dev-shm-usage");
+        options.addArguments("--headless", "--disable-extensions", "--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
         driver.get(PRODUCT_FRONTEND);
     }
@@ -75,6 +75,7 @@ class SeleniumTests {
         Thread.sleep(1000);
         driver.findElement(By.id("deleteConfirm")).click();
         Thread.sleep(2000);
+        assert false;
         assertThatThrownBy(() -> driver.findElement(By.xpath("//td[contains(text(),'Pen')]")))
                 .isInstanceOf(NoSuchElementException.class);
     }

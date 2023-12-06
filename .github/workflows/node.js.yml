@@ -10,26 +10,51 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  frontend:
 
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: orders-dashboard-frontend/package-lock.json
+      - run: npm ci
         working-directory: ./orders-dashboard-frontend
-        cache: 'npm'
-    - run: npm ci
-      working-directory: ./orders-dashboard-frontend
-    - run: npm run build --if-present
-      working-directory: ./orders-dashboard-frontend
-    - run: npm test
-      working-directory: ./orders-dashboard-frontend
+      - run: npm run build --if-present
+        working-directory: ./orders-dashboard-frontend
+      - run: npm start &
+        working-directory: ./orders-dashboard-frontend
+    
+      - name: Set up Java version
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
+
+      - name: Build and test with Maven
+        run: mvn clean test
+
+      - name: GitHub Action to create an Azure DevOps Bug Workitem when a workflow fails
+        uses: stefanstranger/azuredevops-bug-action@1.1
+        if: failure()
+        with:
+          OrganizationName: "01169599"
+          PAT: "PAT"
+          ProjectName: "MWO-project"
+          AreaPath: "MWO-project"
+          IterationPath: "MWO-project"
+          GithubToken: "GithubToken"
+          WorkflowFileName: "node.js.yml"
+        env:
+          PAT: ${{ secrets.PAT}}
+          GithubToken: ${{ secrets.githubtoken}}
