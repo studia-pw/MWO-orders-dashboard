@@ -36,15 +36,7 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
       - run: npm start &
-      
-  backend:
-    needs: frontend
     
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
       - name: Set up Java version
         uses: actions/setup-java@v1
         with:
@@ -52,3 +44,6 @@ jobs:
 
       - name: Build and test with Maven
         run: mvn clean test
+
+      - name: Close ng
+        run: pkill -f ng
