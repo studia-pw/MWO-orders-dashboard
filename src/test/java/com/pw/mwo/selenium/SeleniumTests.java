@@ -28,7 +28,7 @@ class SeleniumTests {
     @BeforeEach
     void beforeEach() {
         final var options = new ChromeOptions();
-//        options.addArguments("--headless", "--disable-extensions", "--disable-dev-shm-usage");
+        options.addArguments("--headless", "--disable-extensions", "--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
         driver.get(PRODUCT_FRONTEND);
     }
