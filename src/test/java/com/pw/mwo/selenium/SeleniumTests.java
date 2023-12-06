@@ -75,6 +75,7 @@ class SeleniumTests {
         Thread.sleep(1000);
         driver.findElement(By.id("deleteConfirm")).click();
         Thread.sleep(2000);
+        assertThat(driver.findElement(By.xpath("//td[contains(text(),'Pen')]")).isDisplayed()).isFalse();
         assertThatThrownBy(() -> driver.findElement(By.xpath("//td[contains(text(),'Pen')]")))
                 .isInstanceOf(NoSuchElementException.class);
     }
