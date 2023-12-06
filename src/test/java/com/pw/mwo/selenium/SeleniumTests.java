@@ -3,6 +3,7 @@ package com.pw.mwo.selenium;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @ActiveProfiles("test")
@@ -74,7 +76,7 @@ class SeleniumTests {
         driver.findElement(By.id("deleteConfirm")).click();
         Thread.sleep(2000);
         assert false;
-//        assertThatThrownBy(() -> driver.findElement(By.xpath("//td[contains(text(),'Pen')]")))
-//                .isInstanceOf(NoSuchElementException.class);
+        assertThatThrownBy(() -> driver.findElement(By.xpath("//td[contains(text(),'Pen')]")))
+                .isInstanceOf(NoSuchElementException.class);
     }
 }
