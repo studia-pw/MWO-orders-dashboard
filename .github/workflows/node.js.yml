@@ -15,7 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./orders-dashboard-frontend
     
 
     strategy:
@@ -34,8 +33,11 @@ jobs:
           cache: 'npm'
           cache-dependency-path: orders-dashboard-frontend/package-lock.json
       - run: npm ci
+        working-directory: ./orders-dashboard-frontend
       - run: npm run build --if-present
+        working-directory: ./orders-dashboard-frontend
       - run: npm start &
+        working-directory: ./orders-dashboard-frontend
     
       - name: Set up Java version
         uses: actions/setup-java@v1
