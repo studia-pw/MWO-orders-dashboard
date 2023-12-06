@@ -25,6 +25,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+        working-directory: ./orders-dashboard-frontend
         cache: 'npm'
     - run: npm ci
       working-directory: ./orders-dashboard-frontend
