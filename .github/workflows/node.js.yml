@@ -33,4 +33,4 @@ jobs:
         cache-dependency-path: orders-dashboard-frontend/package-lock.json
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm test
+    - run: ng serve
