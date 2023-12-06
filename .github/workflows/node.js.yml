@@ -43,3 +43,18 @@ jobs:
 
       - name: Build and test with Maven
         run: mvn clean test
+
+      - name: GitHub Action to create an Azure DevOps Bug Workitem when a workflow fails
+        uses: stefanstranger/azuredevops-bug-action@1.1
+        if: failure()
+        with:
+          OrganizationName: "01169599"
+          PAT: "PAT"
+          ProjectName: "MWO-project"
+          AreaPath: "MWO-project"
+          IterationPath: "MWO-project"
+          GithubToken: "GithubToken"
+          WorkflowFileName: "node.js.yml"
+        env:
+          PAT: ${{ secrets.PAT}}
+          GithubToken: ${{ secrets.githubtoken}}
