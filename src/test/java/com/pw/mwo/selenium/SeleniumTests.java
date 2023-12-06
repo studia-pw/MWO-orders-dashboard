@@ -3,7 +3,6 @@ package com.pw.mwo.selenium;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -11,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @ActiveProfiles("test")
@@ -28,7 +26,7 @@ class SeleniumTests {
     @BeforeEach
     void beforeEach() {
         final var options = new ChromeOptions();
-//        options.addArguments("--headless", "--disable-extensions", "--disable-dev-shm-usage");
+        options.addArguments("--headless", "--disable-extensions", "--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
         driver.get(PRODUCT_FRONTEND);
     }
@@ -75,7 +73,8 @@ class SeleniumTests {
         Thread.sleep(1000);
         driver.findElement(By.id("deleteConfirm")).click();
         Thread.sleep(2000);
-        assertThatThrownBy(() -> driver.findElement(By.xpath("//td[contains(text(),'Pen')]")))
-                .isInstanceOf(NoSuchElementException.class);
+        assert false;
+//        assertThatThrownBy(() -> driver.findElement(By.xpath("//td[contains(text(),'Pen')]")))
+//                .isInstanceOf(NoSuchElementException.class);
     }
 }
